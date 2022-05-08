@@ -35,7 +35,7 @@ public class ResumeNowApplication {
                     .antMatchers(HttpMethod.POST, "/login").permitAll()
 //                    .antMatchers(HttpMethod.GET, "/users").permitAll()
 //                    .antMatchers(HttpMethod.POST, "/users").permitAll()
-                    .anyRequest().permitAll();
+                    .anyRequest().authenticated();
 
 
 
