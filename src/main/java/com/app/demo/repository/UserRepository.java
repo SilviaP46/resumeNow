@@ -29,21 +29,4 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query("select u.idUser from User u where u.username=:username")
     Long findIdByUsername(@Param("username")String username);
 
-    @Transactional
-    @Modifying
-    @Query("update User u set u.failed=u.failed+1 where u.username=:username")
-    void increaseFailed(@Param("username")String username);
-
-    @Transactional
-    @Modifying
-    @Query("update User u set u.failed=0 where u.username=:username")
-    void resetFailed(@Param("username")String username);
-
-    @Query("select u.failed from User u where u.username=:username")
-    Short getFailed(String username);
-
-    @Transactional
-    @Modifying
-    @Query("update User u set u.status=1 where u.username=:username")
-    void forcedDeactivate(String username);
 }

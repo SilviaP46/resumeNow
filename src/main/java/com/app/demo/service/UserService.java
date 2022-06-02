@@ -2,7 +2,6 @@ package com.app.demo.service;
 
 import com.app.demo.dto.UserDTO;
 import com.app.demo.email.EmailSender;
-import com.app.demo.model.Enums.UserStatus;
 import com.app.demo.model.User;
 import com.app.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.xml.bind.ValidationException;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -32,34 +30,6 @@ public class UserService {
         System.out.println("stefana face yoga cu knoll"+ encoder.encode(users.get(0).getPassword()));
         return users.stream().map(User::mapToDTO).collect(Collectors.toList());
     }
-
-    @Transactional
-    public UserDTO addUser(UserDTO user) throws ValidationException {
-
-        User userSimple = mapToUser(user);
-
-        if (!userSimple.getFirstName().equals("") && !userSimple.getLastName().equals("")
-                && !userSimple.getUsername().equals("") && !userSimple.getPassword().equals("")
-                && !userSimple.getMobileNumber().equals("") )
-        //&& validateEmailAndMobile(userSimple.getEmail(), userSimple.getMobileNumber()))
-        {
-
-            String passNotEncrypted = userSimple.getPassword();
-            userSimple.setStatus(UserStatus.INACTIVE);
-            userSimple.setPassword(encoder.encode(userSimple.getPassword()));
-            userRepository.save(userSimple);
-
-            String text = "Name: " + userSimple.getFirstName() + " " + userSimple.getLastName() + "\n" + "Username: " + userSimple.getUsername() + "\n" + "Password: " + passNotEncrypted;
-
-
-            emailSender.sendEmail(userSimple.getEmail(), "Successful registration", text);
-            return mapToDTO(userSimple);
-        } else {
-            throw new ValidationException("One of the fields was not valid!");
-
-        }
-    }
-
 
     public UserDTO findUserById(Long id) {
         User user = userRepository.findById(id).orElse(null);
@@ -92,29 +62,6 @@ public class UserService {
         return true;
     }
 
-    @Transactional
-    public UserDTO activateUser(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user == null)
-            throw new UsernameNotFoundException("User could not be found!");
-        user.setStatus(UserStatus.ACTIVE);
-        userRepository.save(user);
-        return mapToDTO(user);
-    }
-
-    @Transactional
-    public UserDTO deactivateUser(Long id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user == null)
-            throw new UsernameNotFoundException("User could not be found!");
-
-        user.setStatus(UserStatus.INACTIVE);
-        userRepository.save(user);
-        //notificationService.addUserNotificationUserDeactivated(user);
-        return mapToDTO(user);
-    }
-
-
 
     public User mapToUser(UserDTO userDTO) {
         User user=new User();
@@ -131,8 +78,7 @@ public class UserService {
         }
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
-        user.setStatus(userDTO.getStatus());
-        user.setMobileNumber(userDTO.getMobileNumber());
+
 
         return user;
     }

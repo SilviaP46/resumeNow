@@ -2,11 +2,13 @@ package com.app.demo.service;
 
 import com.app.demo.dto.UserDTO;
 import com.app.demo.error.exception.TooManyFailedAttemptException;
-import com.app.demo.error.exception.UserInactiveException;
 import com.app.demo.error.exception.UserPasswordIncorrectException;
-import com.app.demo.model.Enums.UserStatus;
 import com.app.demo.model.User;
 import com.app.demo.repository.UserRepository;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
+import com.gargoylesoftware.htmlunit.html.HtmlElement;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -29,12 +32,16 @@ public class LoginService {
     @Autowired
     private PasswordEncoder encoder;
 
+    @Autowired
+    private WebScrapingService webScrapingService;
+
     public UserDTO login(String username, String pwd) throws Exception {
+
+        //webScrapingService.scanItems("medic cluj");
+
         User user = validateAndGet(username, pwd);
         if (user == null)
             throw new UserPasswordIncorrectException("User or password incorrect!");
-        if(user.getStatus()!= UserStatus.ACTIVE)
-            throw new UserInactiveException("User is inactive!");
         String token = getJWTToken(username, user.getIdUser());
         UserDTO dto = User.mapToDTO(user);
         dto.setToken(token);
@@ -43,6 +50,16 @@ public class LoginService {
     }
 
     public User validateAndGet(String username, String pwd) {
+        User user = userRepository.findByUserName(username);
+        if (user == null)
+            return null;
+        if (encoder.matches(pwd, user.getPassword())){
+            return user;
+        }
+        return null;
+    }
+
+    /*public User validateAndGet(String username, String pwd) {
         System.out.println(encoder.encode("ok"));
         User user = userRepository.findByUserName(username);
         System.out.println(encoder.matches(pwd, user.getPassword()));
@@ -62,7 +79,7 @@ public class LoginService {
             throw new TooManyFailedAttemptException("User deactivated for too many failed attempts!");
         }
         return null;
-    }
+    }*/
 
     private String getJWTToken(String username, Long id) {
         String secretKey = "mySecretKey";
@@ -85,6 +102,7 @@ public class LoginService {
                         secretKey.getBytes()).compact();
         return token;
     }
+
 
 
 }

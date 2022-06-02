@@ -2,6 +2,7 @@ package com.app.demo.controller;
 
 import com.app.demo.dto.UserDTO;
 import com.app.demo.service.LoginService;
+import com.app.demo.service.WebScrapingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

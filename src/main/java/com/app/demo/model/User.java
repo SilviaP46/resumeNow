@@ -1,15 +1,12 @@
 package com.app.demo.model;
 
 import com.app.demo.dto.UserDTO;
-import com.app.demo.model.Enums.UserStatus;
-import lombok.*;
-import org.springframework.data.repository.cdi.Eager;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.stream.Collectors;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @Entity
@@ -31,10 +28,6 @@ public class User {
     private String lastName;
 
     @Column(nullable = false)
-    //@Pattern(regexp = "\\(?\\+\\(?49\\)?[ ()]?([- ()]?\\d[- ()]?){10}|\\(?\\+\\(?40\\)?[ ()]?([- ()]?\\d[- ()]?){9}")
-    private String mobileNumber;
-
-    @Column(nullable = false)
     //@Pattern(regexp="^[A-Za-z0-9.-]+@msg\\.group$")
     private String email;
 
@@ -42,10 +35,6 @@ public class User {
     private String username;
 
     private String password;
-    private UserStatus status;
-
-    @Column(columnDefinition = "integer default 0")
-    private Short failed;
 
 
     public static UserDTO mapToDTO(User user){
@@ -55,8 +44,6 @@ public class User {
         dto.setUsername(user.getUsername());
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
-        dto.setMobileNumber(user.getMobileNumber());
-        dto.setStatus(user.getStatus());
 
         return dto;
     }

@@ -33,7 +33,8 @@ public class ResumeNowApplication {
                     .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
                     .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/login").permitAll()
-//                    .antMatchers(HttpMethod.GET, "/users").permitAll()
+                    .antMatchers(HttpMethod.POST, "/register").permitAll()
+                    .antMatchers(HttpMethod.GET, "/getJobs").permitAll()
 //                    .antMatchers(HttpMethod.POST, "/users").permitAll()
                     .anyRequest().authenticated();
 
@@ -68,8 +69,8 @@ public class ResumeNowApplication {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername("lorincz.csaba99@gmail.com");
-        mailSender.setPassword("yeum beum nqtn qfsj");
+        mailSender.setUsername("puiacsilvia46@gmail.com");
+        mailSender.setPassword("uahoasctqlhuonps");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

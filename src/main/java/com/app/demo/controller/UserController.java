@@ -26,11 +26,6 @@ public class UserController {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/users/add")
-    public ResponseEntity<UserDTO> addUser(@RequestBody UserDTO user) throws Exception {
-        return new ResponseEntity<>(userService.addUser(user), HttpStatus.OK);
-    }
-
     @DeleteMapping("/users/delete/{id}")
     public Boolean deleteUserById(@PathVariable Long id) {
         return userService.removeUser(id);
@@ -53,19 +48,5 @@ public class UserController {
                              @RequestParam String text) {
         return emailSender.sendEmail(email, subject, text);
     }
-
-    @PutMapping("/users/activate/{id}")
-    public UserDTO activateUser(@PathVariable Long id) {
-        return userService.activateUser(id);
-    }
-
-    @PutMapping("/users/deactivate/{id}")
-    public UserDTO deactivateUser(@PathVariable Long id) {
-        return userService.deactivateUser(id);
-    }
-
-
-
-
 
 }
