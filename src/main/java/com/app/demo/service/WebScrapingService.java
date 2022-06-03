@@ -15,12 +15,11 @@ import java.util.Objects;
 public class WebScrapingService {
 
     private ArrayList<Job> jobs;
-    //private Map<Map<String, String>, String> jobs;
     private static final String WEBSITE = "https://www.ejobs.ro";
 
-    public ArrayList<Job> scrape() throws IOException {
+    public ArrayList<Job> scrape(String keywords) throws IOException {
         jobs = new ArrayList<Job>();
-        scanItems("manager");
+        scanItems(keywords);
         System.out.println(jobs);
         return jobs;
     }
@@ -32,6 +31,7 @@ public class WebScrapingService {
 
         try {
             doc = Jsoup.connect("https://www.ejobs.ro/locuri-de-munca/" + s).get();
+            System.out.println("https://www.ejobs.ro/locuri-de-munca/" + s);
         } catch (IOException ignored) {
             System.out.println("Could not scan items.");
             return;
@@ -45,7 +45,7 @@ public class WebScrapingService {
             for (Element l : links) {
                 limit++;
                 String link = l.attributes().get("href");
-                if(findJobDetails(link)!=null)
+                if (findJobDetails(link) != null)
                     jobs.add(findJobDetails(link));
                 if (limit == 50)
                     break;
@@ -55,14 +55,12 @@ public class WebScrapingService {
     }
 
     private Job findJobDetails(String jobLink) {
-        //Map<String, String> jobDetails = new HashMap<>();
         Document doc;
         Job job = new Job();
 
         try {
             doc = Jsoup.connect(WEBSITE + jobLink).get();
-            //System.out.println(WEBSITE + jobLink);
-
+            System.out.println(WEBSITE + jobLink);
 
         } catch (IOException ignored) {
             System.out.println("Could Not find the title");
@@ -148,7 +146,7 @@ public class WebScrapingService {
 
         }
 
-        if(job.getCity()==null)
+        if (job.getCity() == null)
             return null;
 
         return job;

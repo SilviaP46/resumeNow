@@ -4,10 +4,7 @@ import com.app.demo.service.WebScrapingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,8 +18,8 @@ public class WebScrappingController {
 
     @GetMapping("/getJobs")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ArrayList<Job>> findAll() throws IOException {
-        return new ResponseEntity<>(webScrapingService.scrape(), HttpStatus.OK);
+    public ResponseEntity<ArrayList<Job>> findAll(@RequestParam("keywords") String keywords) throws IOException {
+        return new ResponseEntity<>(webScrapingService.scrape(keywords), HttpStatus.OK);
     }
 
 }
