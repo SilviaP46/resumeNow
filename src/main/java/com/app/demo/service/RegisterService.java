@@ -35,8 +35,9 @@ public class RegisterService {
             user.setUsername(username);
             user.setEmail(email);
             user.setPassword(encoder.encode(password));
+            System.out.println(email);
 
-            emailSender.sendEmail(user.getEmail(), "Successful registration on resumeNow", "Welcome to resumeNow "+user.getFirstName() +"! You can now create your perfect resume. xoxo -resumeNow Team (Macesului 13-15)");
+            //emailSender.sendEmail(user.getEmail(), "Successful registration on resumeNow", "Welcome to resumeNow "+user.getFirstName() +"! You can now create your perfect resume. xoxo -resumeNow Team (Macesului 13-15)");
             return userRepository.save(user);
         }
 

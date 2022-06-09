@@ -12,9 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
-
-import static com.app.demo.model.User.mapToDTO;
 
 @Component
 public class UserService {
@@ -25,26 +22,26 @@ public class UserService {
     @Autowired
     private EmailSender emailSender;
 
-    public List<UserDTO> findAll() {
+    public List<User> findAll() {
         List<User> users = (List<User>) userRepository.findAll();
         System.out.println("stefana face yoga cu knoll"+ encoder.encode(users.get(0).getPassword()));
-        return users.stream().map(User::mapToDTO).collect(Collectors.toList());
+        return users;
     }
 
-    public UserDTO findUserById(Long id) {
+    public User findUserById(Long id) {
         User user = userRepository.findById(id).orElse(null);
         if (user == null)
             throw new UsernameNotFoundException("User could not be found!");
 
-        return mapToDTO(user);
+        return user;
     }
 
-    public UserDTO findUserByUsername(String username) {
+    public User findUserByUsername(String username) {
         User user = userRepository.findByUserName(username);
         if (user == null)
             throw new UsernameNotFoundException("User " + username + " could not be found!");
 
-        return mapToDTO(user);
+        return user;
     }
 
 

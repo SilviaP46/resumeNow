@@ -1,8 +1,8 @@
 package com.app.demo.controller;
 
 import com.app.demo.dto.UserDTO;
+import com.app.demo.model.User;
 import com.app.demo.service.LoginService;
-import com.app.demo.service.WebScrapingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ public class LoginController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<UserDTO> login(@RequestParam("user") String username, @RequestParam("password") String pwd) throws Exception {
+    public ResponseEntity<User> login(@RequestParam("user") String username, @RequestParam("password") String pwd) throws Exception {
         return new ResponseEntity<>(loginService.login(username, pwd), HttpStatus.OK);
     }
 }

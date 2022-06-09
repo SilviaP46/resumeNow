@@ -87,7 +87,6 @@ public class WebScrapingService {
                         else
                             job.setCity(d.text());
 
-                        break;
                     }
                     case 1 -> {
                         Elements d = details.get(i).getElementsByClass("JDSummary__Link");
@@ -95,7 +94,6 @@ public class WebScrapingService {
                             job.setType("nespecificat");
                         else
                             job.setType(d.text());
-                        break;
                     }
                     case 2 -> {
                         Elements d = details.get(i).getElementsByClass("JDSummary__Link");
@@ -103,7 +101,6 @@ public class WebScrapingService {
                             job.setLevel("nespecificat");
                         else
                             job.setLevel(d.text());
-                        break;
                     }
                     case 3 -> {
                         Elements d = details.get(i).getElementsByClass("JDSummary__Link");
@@ -111,7 +108,6 @@ public class WebScrapingService {
                             job.setStudies("nespecificat");
                         else
                             job.setStudies(d.text());
-                        break;
                     }
                     case 4 -> {
                         Elements d = details.get(i).getElementsByClass("JDSummary__Link");
@@ -119,7 +115,6 @@ public class WebScrapingService {
                             job.setDepartment("nespecificat");
                         else
                             job.setDepartment(d.text());
-                        break;
                     }
                     case 5 -> {
                         Elements d = details.get(i).getElementsByClass("JDSummary__Link");
@@ -127,7 +122,6 @@ public class WebScrapingService {
                             job.setSalary("nespecificat");
                         else
                             job.setSalary(d.text());
-                        break;
                     }
                     case 6 -> {
                         Elements d = details.get(i).getElementsByClass("JDSummary__Link");
@@ -135,7 +129,6 @@ public class WebScrapingService {
                             job.setIndustry("nespecificat");
                         else
                             job.setIndustry(d.text());
-                        break;
                     }
                     default -> {
                     }

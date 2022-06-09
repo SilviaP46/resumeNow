@@ -15,7 +15,7 @@ public class EmailSender {
 
     public Boolean sendEmail(String email, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("jbugger@msg.group");
+        message.setFrom("soeldenteam462@gmail.com");
         message.setTo(email);
         message.setSubject(subject);
         message.setText(text);

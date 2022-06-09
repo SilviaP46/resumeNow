@@ -35,10 +35,11 @@ public class User {
     private String username;
 
     private String password;
+    private String token;
 
 
-    public static UserDTO mapToDTO(User user){
-        UserDTO dto=new UserDTO();
+    /*public static UserDTO mapToDTO(User user) {
+        UserDTO dto = new UserDTO();
         dto.setIdUser(user.getIdUser());
         dto.setEmail(user.getEmail());
         dto.setUsername(user.getUsername());
@@ -46,5 +47,5 @@ public class User {
         dto.setLastName(user.getLastName());
 
         return dto;
-    }
+    }*/
 }

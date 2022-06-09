@@ -11,6 +11,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -34,26 +35,8 @@ public class ResumeNowApplication {
                     .authorizeRequests()
                     .antMatchers(HttpMethod.POST, "/login").permitAll()
                     .antMatchers(HttpMethod.POST, "/register").permitAll()
-                    .antMatchers(HttpMethod.GET, "/getJobs").permitAll()
-//                    .antMatchers(HttpMethod.POST, "/users").permitAll()
-                    .anyRequest().authenticated();
+                    .anyRequest().permitAll();
 
-
-
-            /*http.csrf().disable()
-                    .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
-                    .authorizeRequests()
-
-                    .antMatchers(HttpMethod.GET,"/notification/**").permitAll()
-                    .antMatchers(HttpMethod.PUT,"/notification/**").permitAll()
-                    .antMatchers(HttpMethod.POST, "/login").permitAll()
-                    .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                    .antMatchers(HttpMethod.POST, "/update/**").hasAuthority("USER_MANAGEMENT")
-                    .antMatchers("/bugs/**").hasAuthority("BUG_MANAGEMENT")
-                    .antMatchers(HttpMethod.GET, "/users").authenticated()
-                    .antMatchers("/roles/**").hasAuthority("PERMISSION_MANAGEMENT")
-                    .antMatchers("/users/**").hasAuthority("USER_MANAGEMENT")
-                    .anyRequest().authenticated();*/
         }
     }
 
