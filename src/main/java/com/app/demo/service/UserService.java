@@ -24,7 +24,6 @@ public class UserService {
 
     public List<User> findAll() {
         List<User> users = (List<User>) userRepository.findAll();
-        System.out.println("stefana face yoga cu knoll"+ encoder.encode(users.get(0).getPassword()));
         return users;
     }
 
